@@ -1,0 +1,91 @@
+- name: Install homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  tags:
+    - homebrew
+    - taps
+  with_items:
+    - candid82/brew
+    - homebrew/bundle
+    - homebrew/cask-fonts
+    - homebrew/services
+    - microsoft/git
+    - mongodb/brew
+    - shivammathur/php
+    - yqrashawn/goku
+    
+- name: Install homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+  tags:
+    - homebrew
+    - casks
+  with_items:
+    - karabiner-elements
+    - font-sauce-code-pro-nerd-font
+    - google-chrome
+    - kitty
+    - tableplus
+    - herd
+    - superkey
+    # - docker
+    # - slack
+    
+- name: Install packages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - homebrew
+    - packages
+  with_items:
+    - little-cms2
+    - webp
+    - jpeg-xl
+    - aom
+    - pcre2
+    - coreutils
+    - curl
+    - deno
+    - fd
+    - flyctl
+    - freetds
+    - fzf
+    - libavif
+    - gd
+    - git
+    - glew
+    - glfw
+    - harfbuzz
+    - httpd
+    - lazygit
+    - openjdk
+    - maven
+    - node@16
+    - mongosh
+    - neovim
+    - node
+    - php
+    - phpunit
+    - pnpm
+    - prettier
+    - prettierd
+    - python@3.10
+    - ranger
+    - ripgrep
+    - sshuttle
+    - stow
+    - stylua
+    - tmux
+    - tmuxinator
+    - tree
+    - yarn
+    - mongodb/brew/mongodb-community
+    - shivammathur/php/php@7.4
+    - yqrashawn/goku/goku
+    - zsh-syntax-highlighting
+
+- name: Setup fzf keybindings
+  shell: $(brew --prefix)/opt/fzf/install
+  tags:
+    - homebrew

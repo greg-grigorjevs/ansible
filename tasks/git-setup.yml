@@ -1,0 +1,23 @@
+- name: Git personal setup email
+  git_config:
+    name: user.email
+    scope: global
+    value: "ggrigorjevs@icloud.com"
+  tags:
+  - git-personal
+- name: Git personal setup name
+  git_config:
+    name: user.name
+    scope: global
+    value: "Greg Grigorjevs"
+  tags:
+  - git-personal
+
+- name: Set ssh remote url for ansible repo
+  git_config:
+    name: remote.origin.url
+    scope: local
+    repo: ~/ansible
+    value: git@github.com:greg-grigorjevs/ansible.git
+  tags:
+    - git-personal

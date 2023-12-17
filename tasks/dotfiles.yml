@@ -1,0 +1,41 @@
+- name: Clone .dotfiles
+  ansible.builtin.git:
+    repo: 'git@github.com:greg-grigorjevs/.dotfiles.git'
+    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    version: mac
+    accept_hostkey: yes
+  tags:
+    - dotfiles
+        
+- name: Remove some preset dotfiles before stowing
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - ~/.zshrc
+    - ~/.fzf.zsh
+  tags:
+    - dotfiles
+    - stow
+
+- name: Stow dotfiles
+  script: ~/.dotfiles/bin/stow_script.sh
+  register: result
+  tags:
+    - dotfiles
+    - base
+    - stow
+- name: Display stow output
+  debug:
+    msg: "{{result.stdout}}"
+  tags:
+    - stow
+    - dotfiles
+
+- name: Install colemak dh keyboard layout
+  copy:
+    src: ~/.dotfiles/Colemak DH.bundle
+    dest: ~/Library/Keyboard Layouts/Colemak DH.bundle
+  tags:
+    - dotfiles
+    - keyboard
