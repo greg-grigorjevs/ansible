@@ -1,0 +1,86 @@
+- name: Clone Kmonad repo
+  ansible.builtin.git:
+    repo: 'https://github.com/kmonad/kmonad'
+    recursive: true
+    dest: "{{ lookup('env', 'HOME') }}/kmonad"
+  tags:
+    - install
+    - kmonad
+
+- name: Install karabiner virtual kb pkg
+  ansible.builtin.shell:
+    chdir: "{{ lookup('env', 'HOME') }}/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/"
+    cmd: installer -pkg Karabiner-DriverKit-VirtualHIDDevice-3.1.0.pkg -target /
+  become: true
+  tags:
+    - install
+    - kmonad
+      
+- name: Activate karabiner virtual kb
+  ansible.builtin.shell:
+    cmd: /Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager activate
+  become: true
+  tags:
+    - install
+    - kmonad
+
+- name: Install stack buiding tool
+  community.general.homebrew:
+    name: haskell-stack
+  tags:
+    - install
+    - kmonad
+    
+- name: Install fd
+  community.general.homebrew:
+    name: fd
+  tags:
+    - install
+    - kmonad
+
+- name: install kmonad
+  ansible.builtin.shell:
+    chdir: "{{ lookup('env', 'HOME') }}/kmonad"
+    cmd: stack build --flag kmonad:dext --extra-include-dirs=c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/include/pqrs/karabiner/driverkit:c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/src/Client/vendor/include
+  tags:
+    - install
+    - kmonad
+
+  
+- name: mkdir /usr/local/bin
+  file:
+    dest: "/usr/local/bin"
+    mode: 0700
+    state: directory
+  become: true
+  tags:
+    - kmonad
+
+- name: symlink kmonad
+  ansible.builtin.shell:
+    cmd: "ln -s $(fd -p -g '**/bin/kmonad' {{ lookup('env', 'HOME') }}/kmonad/.stack-work) /usr/local/bin/kmonad"
+  become: true
+  tags:
+    - install
+    - kmonad
+    - kmonad-symlink
+
+- name: Make a sudoer file for kmonad
+  community.general.sudoers:
+    name: kmonad
+    state: present
+    user: "{{ lookup('env', 'USER') }}"
+    commands: /usr/local/bin/kmonad
+  become: true
+  tags:
+    - install
+    - kmonad
+    - kmonad-sudoer
+
+
+
+  
+
+
+
+

@@ -1,5 +1,7 @@
 - name: Change shell to zsh
   shell: chsh -s $(which zsh)
+  tags:
+    - dotfiles
 
 - name: Get oh-my-zsh script
   become: true

@@ -29,7 +29,6 @@
     key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
   tags:
-    - dotfiles
     - install
     - ssh
     - authorized_key

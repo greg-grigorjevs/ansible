@@ -6,6 +6,14 @@
     accept_hostkey: yes
   tags:
     - dotfiles
+    
+- name: Install stow
+  community.general.homebrew:
+    name: stow
+    state: present
+  tags:
+    - dotfiles
+    - stow
         
 - name: Remove some preset dotfiles before stowing
   file:
