@@ -40,12 +40,8 @@
     - homebrew
     - packages
   with_items:
-    - little-cms2
-    - webp
-    - jpeg-xl
     - aom
     - broot
-    - pcre2
     - coreutils
     - curl
     - deno
@@ -53,21 +49,25 @@
     - flyctl
     - freetds
     - fzf
-    - libavif
     - gd
     - git
     - glew
     - glfw
     - harfbuzz
     - httpd
+    - jpeg-xl
     - lazygit
-    - openjdk
+    - libavif
+    - little-cms2
     - maven
-    - node@16
+    - mongodb/brew/mongodb-community
     - mongosh
     - neovim
     - neovim-remote
     - node
+    - node@16
+    - openjdk
+    - pcre2
     - php
     - phpunit
     - pnpm
@@ -76,16 +76,17 @@
     - python@3.10
     - ranger
     - ripgrep
+    - shivammathur/php/php@7.4
+    - starship
     - sshuttle
     - stow
     - stylua
     - tmux
     - tmuxinator
     - tree
+    - webp
     - yarn
     - yazi
-    - mongodb/brew/mongodb-community
-    - shivammathur/php/php@7.4
     - yqrashawn/goku/goku
     - zsh-syntax-highlighting
 
